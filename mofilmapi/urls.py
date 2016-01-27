@@ -19,10 +19,14 @@ from rest_framework import routers
 from movies import views
 #from quickstart imp
 from rest_framework.routers import DefaultRouter
-from movies.views import MoviesViewSet
 from project import views
+from movies.views import MoviesViewSet
 from project.views import ClientViewSet
+from portal.views import PortalViewSet
+from portal.views import PortalProjectViewSet
+from users.views import UserViewSet
 
+from rest_framework.versioning import NamespaceVersioning
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.authtoken import views
@@ -32,12 +36,21 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 router = routers.DefaultRouter()
 router.register(r'movies', MoviesViewSet)
 router.register(r'project', ClientViewSet)
+router.register(r'portal', PortalViewSet)
+#router.register(r'portal/(?P<pk>[0-9]+)/portalProject/(?<pid>[0-9]+)', PortalViewSet)
+#router.register(r'portal/(?P<portal_pk>\d+)/portalProject/(?P<portalProject_pk>\d+)', PortalViewSet, 'portalProject')
+#router.register(r'portal/(?P<portal_pk>\d+)/portalProject/(?P<portalProject_pk>\d+)', PortalViewSet, 'portal-Project')
+#router.register(r'portal/portalProject', PortalViewSet.as_view({ 'get' : 'portalProject'}))
+router.register(r'portalProject', PortalProjectViewSet)
+router.register(r'users', UserViewSet)
 
+portalProj = PortalViewSet.as_view({'get': 'portalPr'},)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^v1/', include(router.urls, namespace='v1'),),
+    url(r'^portal/(?P<pk>[0-9]+)/portalProject/(<pid>[0-9]+)/', portalProj),
     url(r'^admin/', include(admin.site.urls)),
-        url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', views.obtain_auth_token),
 
 ]
 

@@ -11,7 +11,30 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='movies',
+            name='Event',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('productID', models.IntegerField()),
+                ('termsID', models.IntegerField()),
+                ('name', models.CharField(max_length=40)),
+                ('webpath', models.CharField(max_length=50)),
+                ('status', models.CharField(max_length=50)),
+                ('hidden', models.CharField(max_length=50)),
+                ('tba', models.CharField(max_length=50)),
+                ('custom', models.CharField(max_length=50)),
+                ('instructions', models.TextField()),
+                ('bgcolor', models.CharField(max_length=10)),
+                ('startDate', models.DateTimeField(verbose_name=b'date published')),
+                ('endDate', models.DateTimeField(verbose_name=b'date published')),
+                ('awardstartDate', models.DateTimeField(verbose_name=b'date published')),
+                ('awardendDate', models.DateTimeField(verbose_name=b'date published')),
+            ],
+            options={
+                'db_table': 'events',
+            },
+        ),
+        migrations.CreateModel(
+            name='Movie',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('shortDesc', models.CharField(max_length=200)),
@@ -36,13 +59,44 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='MovieSources',
+            name='MovieSource',
             fields=[
-                ('movies', models.ForeignKey(related_name='movieSources', primary_key=True, db_column=b'movieID', serialize=False, to='quickstart.movies')),
-                ('sourceID', models.IntegerField(db_column=b'sourceID')),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('movieID', models.ForeignKey(related_name='movieSources', db_column=b'movieID', to='movies.Movie')),
             ],
             options={
                 'db_table': 'movieSources',
             },
+        ),
+        migrations.CreateModel(
+            name='Source',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('brandID', models.IntegerField(db_column=b'brandID')),
+                ('sponsorID', models.IntegerField(db_column=b'sponsorID')),
+                ('termsID', models.IntegerField(db_column=b'termsID')),
+                ('tripBudget', models.IntegerField(db_column=b'tripBudget')),
+                ('name', models.CharField(max_length=40)),
+                ('webfilename', models.CharField(max_length=50)),
+                ('status', models.CharField(max_length=50)),
+                ('hidden', models.CharField(max_length=50)),
+                ('custom', models.CharField(max_length=50)),
+                ('instructions', models.TextField()),
+                ('bgcolor', models.CharField(max_length=10)),
+                ('startDate', models.DateTimeField(verbose_name=b'date published')),
+                ('endDate', models.DateTimeField(verbose_name=b'date published')),
+                ('closeDate', models.DateField()),
+                ('createdDate', models.DateTimeField()),
+                ('events', models.OneToOneField(db_column=b'eventID', to='movies.Event')),
+                ('movies', models.ManyToManyField(related_name='sources', through='movies.MovieSource', to='movies.Movie')),
+            ],
+            options={
+                'db_table': 'sources',
+            },
+        ),
+        migrations.AddField(
+            model_name='moviesource',
+            name='sourceID',
+            field=models.ForeignKey(related_name='movieSources', db_column=b'sourceID', to='movies.Source'),
         ),
     ]
