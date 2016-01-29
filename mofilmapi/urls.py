@@ -25,6 +25,7 @@ from project.views import ClientViewSet
 from portal.views import PortalViewSet
 from portal.views import PortalProjectViewSet
 from users.views import UserViewSet
+from portal.views import PortalContentViewSet
 
 from rest_framework.versioning import NamespaceVersioning
 from rest_framework import viewsets
@@ -43,6 +44,7 @@ router.register(r'portal', PortalViewSet)
 #router.register(r'portal/portalProject', PortalViewSet.as_view({ 'get' : 'portalProject'}))
 router.register(r'portalProject', PortalProjectViewSet)
 router.register(r'users', UserViewSet)
+router.register(r'portalContent', PortalContentViewSet)
 
 portalProj = PortalViewSet.as_view({'get': 'portalPr'},)
 

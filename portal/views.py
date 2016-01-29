@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from models import PortalProject
 from models import Portal
+from models import PortalContent
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.decorators import detail_route
@@ -16,10 +17,18 @@ from rest_framework import status
 
 from serializers import PortalProjectSerializer
 from serializers import PortalSerializer
+from serializers import PortalContentSerializer
 
 class PortalViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows portal to be viewed or edited.
+    """
+
     queryset = Portal.objects.all()
     serializer_class = PortalSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('portalID',)
+
     print "outside func ====  222"
 
     @detail_route(methods=['post','get'])
@@ -41,10 +50,13 @@ class PortalViewSet(viewsets.ModelViewSet):
             else:
                 print serializerPortal.errors
                 return Response(status=status.HTTP_400_BAD_REQUEST)
-        else:
+        elif request.method == "PUT":
             print "in get" + request.method
             #pprint (vars(request))
             return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_200_OK)
+
 
 
     @detail_route(methods=['get'])
@@ -57,5 +69,15 @@ class PortalViewSet(viewsets.ModelViewSet):
 class PortalProjectViewSet(viewsets.ModelViewSet):
     queryset = PortalProject.objects.all()
     serializer_class = PortalProjectSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('portalID',)
+
 
     print "ssa"
+
+class PortalContentViewSet(viewsets.ModelViewSet):
+    queryset = PortalContent.objects.all()
+    serializer_class = PortalContentSerializer
+    #filter_backends = (filters.DjangoFilterBackend,)
+    #filter_fields = ('portalID',)
+

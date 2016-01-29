@@ -17,7 +17,6 @@ class Migration(migrations.Migration):
                 ('brandID', models.IntegerField()),
                 ('createDate', models.DateTimeField(auto_now=True)),
                 ('status', models.CharField(max_length=100)),
-                ('token', models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
@@ -25,6 +24,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('projectID', models.IntegerField()),
+                ('name', models.CharField(max_length=100)),
                 ('portalID', models.IntegerField()),
                 ('createDate', models.DateTimeField(auto_now=True)),
             ],

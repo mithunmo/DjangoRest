@@ -48,12 +48,24 @@ class SourceSerializer(serializers.ModelSerializer):
 class MoviesSerializer(serializers.ModelSerializer):
     #sources = serializers.PrimaryKeyRelatedField(many=True,read_only=True)
     sources = SourceSerializer(many=True, read_only=True)
+    #url = serializers.CharField(source="downloadHD", read_only=True)
 
     class Meta:
         model = Movie
         fields = ('id','shortDesc', 'longDesc','userID','uploaded','modified','credits','active',
                   'status','avgRating','ratingCount','runtime','moderatorID','moderatorComments',
-              'private','productionYear', 'moderated', 'sources')
+              'private','productionYear', 'moderated', 'sources', 'url')
 
+
+class MoviesDetailSerializer(serializers.ModelSerializer):
+    #sources = serializers.PrimaryKeyRelatedField(many=True,read_only=True)
+    sources = SourceSerializer(many=True, read_only=True)
+    url = serializers.CharField(source="downloadHD", read_only=True)
+
+    class Meta:
+        model = Movie
+        fields = ('id','shortDesc', 'longDesc','userID','uploaded','modified','credits','active',
+                  'status','avgRating','ratingCount','runtime','moderatorID','moderatorComments',
+              'private','productionYear', 'moderated', 'sources', 'url')
 
 

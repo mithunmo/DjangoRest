@@ -7,6 +7,7 @@ from rest_framework import permissions
 from models import Movie
 from rest_framework import viewsets
 from serializers import MoviesSerializer
+from serializers import MoviesDetailSerializer
 from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -14,17 +15,24 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from pprint import pprint
 from rest_framework import status
 
-
+from django.shortcuts import get_object_or_404
 
 class MoviesViewSet(viewsets.ModelViewSet):
+
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows movies to be viewed or edited.
     """
     queryset = Movie.objects.all()
     serializer_class = MoviesSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('status', 'userID','avgRating')
+    filter_fields = ('status', 'userID','avgRating',)
     permission_classes = (AllowAny, IsAuthenticatedOrReadOnly, )
+
+    def retrieve(self, request, pk=None):
+        queryset = Movie.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = MoviesDetailSerializer(user)
+        return Response(serializer.data)
 
     @list_route(methods=['get'])
     def movieList(self, request):

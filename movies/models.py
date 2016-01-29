@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+import requests
 
 """
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -43,6 +44,21 @@ class Movie(models.Model):
         status  = models.CharField(max_length=100)
         active  = models.CharField(max_length=100)
         credits  = models.CharField(max_length=100)
+        #downloadHD = ""
+
+
+        def downloadHD(self):
+                r = requests.get('http://api.brightcove.com/services/library?command=find_video_by_reference_id'
+                                 '&media_delivery=http&reference_id='+ str(self.id) +'&video_fields=name,'
+                                 'renditions&token=Ekg-LmhL4QrFPEdtjwJlyX2Zi4l6mgdiPnWGP0bKIyKKT_94PTKHrw..')
+                print r.json()
+                download = r.json()
+                if download is None:
+                        return ""
+                else:
+                        return download["renditions"][0]["url"]
+
+
         #movieSources = models.OneToOneField(movieSources)
         #movieSources = models.ForeignKey(movieSources, related_name="movies")
         #question = models.ForeignKey(Question)
