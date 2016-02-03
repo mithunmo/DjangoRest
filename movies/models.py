@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
 import requests
+from mofilmuser.models import MofilmUser
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -22,6 +23,7 @@ class Movie(models.Model):
         modified = models.DateTimeField('date published')
         moderated = models.DateTimeField('date published',null=True)
         userID = models.IntegerField(default=0)
+        #userID = models.OneToOneField(MofilmUser, db_column='userID')
         private = models.IntegerField(default=0)
         avgRating = models.IntegerField(default=0)
         ratingCount = models.IntegerField(default=0)
@@ -32,13 +34,17 @@ class Movie(models.Model):
         credits  = models.CharField(max_length=100)
         #downloadHD = ""
 
+        def UserDetails(self):
+            print MofilmUser.objects.get(id=self.userID)
+            user = MofilmUser.objects.get(id=self.userID)
+            return [user.id, user.firstname, user.surname, user.email]
 
         def downloadHD(self):
                 r = requests.get('http://api.brightcove.com/services/library?command=find_video_by_reference_id'
                                  '&media_delivery=http&reference_id='+ str(self.id) +'&video_fields=name,'
                                  'renditions&token=Ekg-LmhL4QrFPEdtjwJlyX2Zi4l6mgdiPnWGP0bKIyKKT_94PTKHrw..')
-                print r.json()
                 download = r.json()
+                downloadLinks = []
                 if download is None:
                         return ""
                 else:

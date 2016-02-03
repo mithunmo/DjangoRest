@@ -2,18 +2,6 @@ from django.db import models
 
 class MandrillParam(object):
 
-
-        """
-             'from_email': 'it@mofilm.com',
-             'from_name': 'MOFILM',
-             'html': '<p>Example HTML content</p>',
-             'subject': 'example subject',
-             'text': 'Example text content',
-             'to': [{'email': 'm.mithun@gmail.com',
-                     'name': 'Recipient Name',
-                     'type': 'to'}],
-
-        """
         def __init__(self, fromEmail, fromName, html, subject, textData, toEmail, toName):
                 self.fromEmail = fromEmail
                 self.fromName = fromName
@@ -36,7 +24,6 @@ class MandrillParam(object):
                 toData["name"] = self.toName
                 toData["type"] = "to"
                 sendData.append(toData)
-                print sendData
                 message["to"] = sendData
                 return message
 
