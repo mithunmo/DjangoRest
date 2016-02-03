@@ -27,15 +27,12 @@ class PortalViewSet(viewsets.ModelViewSet):
     queryset = Portal.objects.all()
     serializer_class = PortalSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('portalID',)
+    filter_fields = ('id',)
 
-    print "outside func ====  222"
 
     @detail_route(methods=['post','get'])
     def portalProject(self, request, pk=None):
-        print "in here"
         if request.method == 'POST':
-            print "in post"
             request.data["projectID"] = 3
             serializerProject = PortalProjectSerializer(data=request.data)
             serializerPortal = PortalSerializer(data=request.data)
@@ -51,8 +48,6 @@ class PortalViewSet(viewsets.ModelViewSet):
                 print serializerPortal.errors
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         elif request.method == "PUT":
-            print "in get" + request.method
-            #pprint (vars(request))
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_200_OK)
@@ -61,7 +56,6 @@ class PortalViewSet(viewsets.ModelViewSet):
 
     @detail_route(methods=['get'])
     def project(self, request, pk=None):
-        print "dasd"
         return Response(status=status.HTTP_200_OK)
 
 
@@ -78,6 +72,6 @@ class PortalProjectViewSet(viewsets.ModelViewSet):
 class PortalContentViewSet(viewsets.ModelViewSet):
     queryset = PortalContent.objects.all()
     serializer_class = PortalContentSerializer
-    #filter_backends = (filters.DjangoFilterBackend,)
-    #filter_fields = ('portalID',)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('portalID',)
 
