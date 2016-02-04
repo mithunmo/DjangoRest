@@ -2,7 +2,9 @@ from rest_framework import serializers
 from models import Portal
 from models import PortalProject
 from models import PortalContent
+from models import PortalUser
 from movies.models import Movie
+from users.serializers import UserSerializer
 
 class PortalSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,3 +38,9 @@ class PortalContentSerializer(serializers.ModelSerializer):
 
 
 
+class PortalUserSerializer(serializers.ModelSerializer):
+    portalID = PortalSerializer(read_only=True)
+    userID = UserSerializer(read_only=True)
+    class Meta:
+        model = PortalUser
+        fields = ("portalID", "userID")

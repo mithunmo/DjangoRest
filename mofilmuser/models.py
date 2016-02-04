@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class MofilmUser(models.Model):
-    id = models.AutoField(db_column='ID', primary_key=True)  # Field name made lowercase.
+    id = models.AutoField(db_column='ID', primary_key=True)
     clientid = models.IntegerField(db_column='clientID', blank=True, null=True)  # Field name made lowercase.
     password = models.CharField(max_length=32, blank=True, null=True)
     email = models.CharField(max_length=70)

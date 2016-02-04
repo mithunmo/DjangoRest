@@ -2,6 +2,7 @@ from django.shortcuts import render
 from models import PortalProject
 from models import Portal
 from models import PortalContent
+from models import PortalUser
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework.decorators import detail_route
@@ -18,6 +19,7 @@ from rest_framework import status
 from serializers import PortalProjectSerializer
 from serializers import PortalSerializer
 from serializers import PortalContentSerializer
+from serializers import PortalUserSerializer
 
 class PortalViewSet(viewsets.ModelViewSet):
     """
@@ -75,3 +77,8 @@ class PortalContentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('portalID',)
 
+class PortalUserViewSet(viewsets.ModelViewSet):
+    queryset = PortalUser.objects.all()
+    serializer_class = PortalUserSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('portalID','userID')

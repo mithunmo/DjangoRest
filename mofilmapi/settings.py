@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'movies',
     'project',
     'portal',
+    'mofilmuser',
     'rest_framework',
     'rest_framework.authtoken',
 )

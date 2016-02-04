@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 #from movies.model import Movie
 from movies.models import Movie
+from mofilmuser.models import MofilmUser
+from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Portal(models.Model):
@@ -24,5 +27,10 @@ class PortalContent(models.Model):
     licenseTerms = models.TextField()
     createDate = models.DateTimeField(auto_now=True)
     someText = "dasdsa"
+
+class PortalUser(models.Model):
+    id = models.AutoField(db_column="ID", primary_key=True, )
+    userID = models.OneToOneField(User)
+    portalID = models.OneToOneField(Portal)
 
 

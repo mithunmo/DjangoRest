@@ -48,9 +48,7 @@ class Movie(models.Model):
                 if download is None:
                         return ""
                 else:
-                        return download["renditions"][0]["url"]
-
-
+                        return download["renditions"]
         #movieSources = models.OneToOneField(movieSources)
         #movieSources = models.ForeignKey(movieSources, related_name="movies")
         #question = models.ForeignKey(Question)
