@@ -30,7 +30,9 @@ class PortalContent(models.Model):
 
 class PortalUser(models.Model):
     id = models.AutoField(db_column="ID", primary_key=True, )
-    userID = models.OneToOneField(User)
-    portalID = models.OneToOneField(Portal)
+    #userID = models.OneToOneField(User, unique=False)
+    userID = models.ForeignKey(User, unique=False)
+    portalID = models.ForeignKey(Portal, unique=False)
+
 
 

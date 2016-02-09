@@ -19,15 +19,16 @@ class PortalTests(APITestCase):
         """
         Ensure we can create a new account object.
         """
-        #url = reverse('mofilmuser')
-        #data = {'name': 'DabApps'}
-        #response = self.client.post(url, data, format='json')
+        url = reverse('portal-list')
+        data = {'brandID': 5, 'status' : 'Enabled'}
+        response = self.client.post(url, data, format='json')
+
         #response = self.client.get(url)
         #print response
-        response = self.client.get('/v1/portal/1/')
-        print response
+        #response = self.client.get('/v1/portal/1/')
+        #print response
         #self.assertEqual(response.data["ud"], {'id': 1, 'brandID': 4})
-        self.assertEqual(response.data["brandID"], 4)
+        self.assertEqual(response.data["brandID"], 5)
 
         """
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

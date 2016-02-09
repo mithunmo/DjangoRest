@@ -82,4 +82,3 @@ class MoviesViewSet(viewsets.ModelViewSet):
     #def set_password(self, request, pk=None):
     #    print "ms"
 
-

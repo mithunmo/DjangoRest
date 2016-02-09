@@ -28,6 +28,7 @@ from users.views import UserViewSet
 from portal.views import PortalContentViewSet
 from mofilmuser.views import MofilmUserViewSet
 from portal.views import PortalUserViewSet
+from mofilmauthtoken import views as auth_views
 
 from rest_framework.versioning import NamespaceVersioning
 from rest_framework import viewsets
@@ -55,9 +56,10 @@ portalProj = PortalViewSet.as_view({'get': 'portalPr'},)
 
 urlpatterns = [
     url(r'^v1/', include(router.urls, namespace='v1'),),
-    url(r'^portal/(?P<pk>[0-9]+)/portalProject/(<pid>[0-9]+)/', portalProj),
+    #url(r'^', include(router.urls)),
+    #url(r'^portal/(?P<pk>[0-9]+)/portalProject/(<pid>[0-9]+)/', portalProj),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api-token-auth/', views.obtain_auth_token),
+    url(r'^api-token-auth/', auth_views.obtain_auth_token),
 
 ]
 
