@@ -42,7 +42,7 @@ class Movie(models.Model):
         def downloadHD(self):
                 r = requests.get('http://api.brightcove.com/services/library?command=find_video_by_reference_id'
                                  '&media_delivery=http&reference_id='+ str(self.id) +'&video_fields=name,'
-                                 'renditions&token=Ekg-LmhL4QrFPEdtjwJlyX2Zi4l6mgdiPnWGP0bKIyKKT_94PTKHrw..')
+                                 'renditions&token=xxxx')
                 download = r.json()
                 downloadLinks = []
                 if download is None:
