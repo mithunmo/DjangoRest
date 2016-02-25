@@ -31,8 +31,8 @@ class UserViewSet(viewsets.ModelViewSet):
         #u.save()
 
         try:
-            mandrill_client = mandrill.Mandrill('lFN100sMVCsKP_X4FsuOwA')
-            mandrillObj = MandrillParam("it@mofilm.com", "ddd", 'dddd', 'ddddd', 'ddd', 'm.mithun@gmail.com', "mithun" )
+            mandrill_client = mandrill.Mandrill('xxxxx')
+            mandrillObj = MandrillParam("xxxx", "ddd", 'dddd', 'ddddd', 'ddd', 'xxxx', "xxx" )
             message = mandrillObj.getMandrillMessage()
             result = mandrill_client.messages.send(message=message, async=False)
 
